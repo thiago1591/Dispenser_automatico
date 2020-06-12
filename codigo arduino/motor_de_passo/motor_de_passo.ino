@@ -9,9 +9,9 @@ Stepper my_Stepper(200, D8, D7, D6, D5);
 bool Right = false;
 bool Left = false;
 
-char auth[] = "Put your auth token here";
-char ssid[] = "Put your network name here";
-char pass[] = "Put your password here";
+char auth[] = "";
+char ssid[] = "";
+char pass[] = "";
 
 void setup(){
 
