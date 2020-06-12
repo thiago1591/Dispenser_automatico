@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "341660353868",
+    "firebase_url": "https://socialwolfchat.firebaseio.com",
+    "project_id": "socialwolfchat",
+    "storage_bucket": "socialwolfchat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341660353868:android:288d1e93e8ec49d2583be9",
+        "android_client_info": {
+          "package_name": "com.example.dispenser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341660353868-t8vih51suuu6i4gaer6aa46a6r2kiit7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dispenser",
+            "certificate_hash": "15a3b7303d6f24d06eb0670b1e36ad5fbaa76f66"
+          }
+        },
+        {
+          "client_id": "341660353868-ugbcg5ql76pir8v2ms714eu6osls2uve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZPE89eBjkeAOgh_-WFsPy7Y2PDM5OTSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341660353868-ugbcg5ql76pir8v2ms714eu6osls2uve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
