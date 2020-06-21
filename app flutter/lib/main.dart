@@ -38,7 +38,6 @@ class _MainState extends State<Main> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: callPage(_currentIndex),
-        
         bottomNavigationBar: BottomNavigationBar(
   currentIndex: _currentIndex,
   
