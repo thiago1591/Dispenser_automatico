@@ -1,5 +1,5 @@
 # Automatic Pill Dispenser
-An automatic pill dispenser to help old people
+An automatic pill dispenser to help seniors
 
 ## Preview App
 ![alt text](https://github.com/thiago1590/Dispenser_automatico/blob/master/app_flutter/images/2.png)
