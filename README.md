@@ -20,6 +20,6 @@ when the setted time is equal to the current time, the roulette wheel will spin,
 
 ## Installer
 if you want to test the app with a android the apk is below:\
-[Android .apk installer](https://github.com/thiago1590/Dispenser_automatico/blob/master/app_flutter/assets/app-release.apk)
+[Android .apk installer](https://drive.google.com/drive/folders/1yBSJ94QHuxPml-t3kO0CIbflPHWIXKIx?usp=sharing)
 
 
