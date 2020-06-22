@@ -28,11 +28,9 @@ class _WelcomeState extends State<Welcome> {
               children: <Widget>[
               Text("Estamos aqui para garantir a sua saúde!", style: TextStyle(fontSize: 31,color: Colors.white.withOpacity(0.9)),),
               SizedBox(height:50),
+              Align(),
               Padding(padding: EdgeInsets.fromLTRB(110, 13, 0, 0),
-              child: SizedBox(
-                height: 50,
-                width: 117,
-                child: 
+              child: 
               RaisedButton(
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>Config()));
@@ -43,7 +41,8 @@ class _WelcomeState extends State<Welcome> {
                  borderRadius: BorderRadius.circular(30),
                 
                       ),
-              ),),)
+              ),
+              )
             ],)
             ,
           

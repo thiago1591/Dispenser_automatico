@@ -2,10 +2,7 @@ import 'dart:async';
 import 'package:dispenser/ui/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../main.dart';
-
-
 
 class MyApp extends StatelessWidget {
     @override

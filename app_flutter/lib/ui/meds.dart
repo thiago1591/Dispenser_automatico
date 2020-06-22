@@ -7,7 +7,6 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import "package:flutter/material.dart";
 
-
 import 'config.dart';
 
 const color = const Color(0xff8FD9DB);
@@ -23,27 +22,26 @@ class _MedsState extends State<Meds> {
   Map<String, dynamic> remedios = Map();
   List nomes = [];
   List horarios = [];
-  List pills = ["pill1", "pill2", "pill3", "pill4", "pill5","pill1", 
-  "pill2", "pill3", "pill4", "pill5","pill1", "pill2", "pill3", "pill4", "pill5",
-  "pill1", "pill2", "pill3", "pill4", "pill5"];
+  List pills = [
+    "pill1","pill2","pill3","pill4","pill5","pill1","pill2",
+    "pill3","pill4","pill5","pill1","pill2","pill3"
+  ];
   final dBRef = FirebaseDatabase.instance.reference();
 
-  void remover(int index){
- dBRef.child('horarios').child('$index').remove();
+  void removerFirebase(int index) {
+    dBRef.child('horarios').child('$index').remove();
   }
-
-
 
   @override
   void initState() {
     super.initState();
     _readData().then((data) {
-      if(this.mounted){
+      if (this.mounted) {
         setState(() {
-        remedios = json.decode(data);
-        nomes = remedios.keys.toList();
-        horarios = remedios.values.toList();
-      });
+          remedios = json.decode(data);
+          nomes = remedios.keys.toList();
+          horarios = remedios.values.toList();
+        });
       }
     });
   }
@@ -118,8 +116,8 @@ class _MedsState extends State<Meds> {
             child: ListView.builder(
                 itemCount: remedios.length,
                 itemBuilder: (context, index) {
-                  
-                  return SingleChildScrollView(child:Card(
+                  return SingleChildScrollView(
+                      child: Card(
                     child: ListTile(
                         onTap: () {},
                         title: Text(nomes[index]),
@@ -132,26 +130,22 @@ class _MedsState extends State<Meds> {
                           onSelected: (a) {
                             print(index);
                             String key = nomes[index];
-                           
-                            
-                            if(this.mounted){
+
+                            if (this.mounted) {
                               setState(() {
-                              _removeData(key);
-                              remover(index);
-                              
-                            });
+                                _removeData(key);
+                                removerFirebase(index);
+                              });
                             }
                           },
                           itemBuilder: (BuildContext context) =>
                               <PopupMenuEntry<pop>>[
                             const PopupMenuItem<pop>(
                               value: pop.remove,
-                              
                               child: Text("Remover"),
                             )
                           ],
-                        )
-                        ),
+                        )),
                   ));
                 })),
       ],

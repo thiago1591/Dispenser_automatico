@@ -14,30 +14,53 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Map<String, dynamic> remedios = Map();
-
+  Future dataFuture;
   List proxs = [];
-  DateTime proximo, proximo2, proximo3;
-  String prox, prox2, prox3, pass;
+  String pass;
   var nome;
-  List medHr = [];
+  List horarios = [];
   List medHrDate = [];
-  List medHrString = [];
-  int posicao, pos, status1, status2;
-  int check = 0;
+  int posicao, pos, status1, check = 0, status2;
 
-  void convertDate(List old, List val) {
+  @override
+  void initState() {
+    super.initState();
+    dataFuture = _getData();
+  }
+
+  _getData() async {
+    return await getProximosHorarios();
+  }
+
+  Future getProximosHorarios() async {
+    await _readData2().then((data) {
+      remedios = json.decode(data);
+      horarios = remedios.values.toList();
+      setar();
+      _readData().then((data) {
+        if (this.mounted) {
+          setState(() {
+            proxs = json.decode(data);
+          });
+        }
+      });
+      return proxs;
+    });
+  }
+
+  void convertDate(List lista, List listaConvertida) {
     DateTime now = new DateTime.now();
-    for (int i = 0; i < old.length; i++) {
-      String a = old[i];
-      String date = "${now.year}-${now.month}-${now.day} $a";
+    for (int i = 0; i < lista.length; i++) {
+      String dateString = "${now.year}-${now.month}-${now.day} ${lista[i]}";
       DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm");
-      DateTime dateTime = dateFormat.parse(date);
-      val.add(dateTime);
+      DateTime dateTime = dateFormat.parse(dateString);
+      listaConvertida.add(dateTime);
     }
-    val.sort((a, b) => a.compareTo(b));
+    listaConvertida.sort((a, b) => a.compareTo(b));
   }
 
   void proximahr(List old) {
+    proxs.length = 3;
     DateTime now = new DateTime.now();
     var dif1 = -100000;
     DateTime hour =
@@ -45,28 +68,18 @@ class _HomeState extends State<Home> {
     for (int i = 0; i < old.length; i++) {
       var dif2 = hour.difference(old[i]).inMinutes;
       if (dif2 > dif1 && old[i].isAfter(hour)) {
-        proxs.length = 3;
-        proximo = old[i];
-        DateTime hr = proximo;
-        prox = DateFormat('kk:mm').format(hr);
-        proxs[0] = prox;
+        proxs[0] = DateFormat('kk:mm').format(old[i]);
         pos = i;
         check = 1;
-
         dif1 = hour.difference(old[i]).inMinutes;
       }
     }
-    proxs.length = 3;
+
     if (check == 0) {
-      proximo = old[0];
-      DateTime hr = proximo;
-      prox = DateFormat('kk:mm').format(hr);
-      proxs.length = 3;
-      proxs[0] = "$prox";
+      proxs[0] = DateFormat('kk:mm').format(old[0]);
       pos = 0;
     }
     if (pos == 0) {
-      proxs.length = 3;
       int tam = old.length;
       DateTime hr1 = old[tam - 1];
       DateTime hr2 = old[tam - 2];
@@ -74,14 +87,12 @@ class _HomeState extends State<Home> {
       proxs[2] = DateFormat('kk:mm').format(hr2);
     }
     if (pos == 1) {
-      proxs.length = 3;
       DateTime hr1 = old[0];
       DateTime hr2 = old[old.length - 1];
       proxs[1] = DateFormat('kk:mm').format(hr1);
       proxs[2] = DateFormat('kk:mm').format(hr2);
     }
     if (pos > 1) {
-      proxs.length = 3;
       DateTime hr1 = old[pos - 1];
       DateTime hr2 = old[pos - 2];
       proxs[1] = DateFormat('kk:mm').format(hr1);
@@ -102,7 +113,7 @@ class _HomeState extends State<Home> {
     if (dateTime1.isBefore(hour)) {
       setState(() {
         status1 = 0;
-      }); 
+      });
     }
     if (dateTime1.isAfter(hour)) {
       status1 = 1;
@@ -118,8 +129,6 @@ class _HomeState extends State<Home> {
       proxs[1] = proxs[2];
       proxs[2] = pass;
     }
-    print(status1);
-    print(status2);
   }
 
   void checar2() {
@@ -141,7 +150,7 @@ class _HomeState extends State<Home> {
   void getName() {
     List value = remedios.values.toList();
     List key = remedios.keys.toList();
-    String a = prox;
+    String a = proxs[0];
     for (int i = 0; i < remedios.length; i++) {
       if (value[i] == a) {
         posicao = i;
@@ -153,15 +162,15 @@ class _HomeState extends State<Home> {
       });
     }
   }
-  
-  void delayFunc() {
+
+  void setar() {
     List key = remedios.keys.toList();
     if (remedios.length == 1) {
-      proxs.length = 3;
-      pass = medHr[0];
+      pass = horarios[0];
       nome = key[0];
     } else if (remedios.length == 2) {
-      convertDate(medHr, medHrDate);
+      convertDate(horarios, medHrDate);
+      proxs.length = 2;
       List key = remedios.keys.toList();
       DateTime now = new DateTime.now();
       var dif1 = -100000;
@@ -170,47 +179,37 @@ class _HomeState extends State<Home> {
       for (int i = 0; i < medHrDate.length; i++) {
         var dif2 = hour.difference(medHrDate[i]).inMinutes;
         if (dif2 > dif1 && medHrDate[i].isAfter(hour)) {
-          
-            proxs.length = 2;
-            proximo = medHrDate[i];
-            DateTime hr = proximo;
-            prox = DateFormat('kk:mm').format(hr);
-            proxs[0] = prox;
-            nome = key[i];
-            pos = i;
-            check = 1;
-          
+          proxs[0] = DateFormat('kk:mm').format(medHrDate[i]);
+          nome = key[i];
+          pos = i;
+          check = 1;
+
           dif1 = hour.difference(medHrDate[i]).inMinutes;
         }
       }
       if (check == 0) {
-        if(this.mounted){
+        if (this.mounted) {
           setState(() {
-          proximo = medHrDate[0];
-          DateTime hr = proximo;
-          prox = DateFormat('kk:mm').format(hr);
-          proxs.length = 2;
-          proxs[0] = prox;
-          pos = 0;
-          nome = key[0];
-        });
+            proxs[0] = DateFormat('kk:mm').format(medHrDate[0]);
+            pos = 0;
+            nome = key[0];
+          });
         }
-        
       }
       if (pos == 1) {
         DateTime hr1 = medHrDate[0];
-        proxs.length = 2;
+
         proxs[1] = DateFormat('kk:mm').format(hr1);
       }
       if (pos == 0) {
         DateTime hr1 = medHrDate[1];
-        proxs.length = 2;
+
         proxs[1] = DateFormat('kk:mm').format(hr1);
       }
       check = 0;
       checar2();
     } else {
-      convertDate(medHr, medHrDate);
+      convertDate(horarios, medHrDate);
       proximahr(medHrDate);
       getName();
       checar();
@@ -267,7 +266,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Widget linha() {
+  Widget lista() {
     if (remedios.length == 1) {
       return Padding(
         padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
@@ -428,38 +427,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future dataFuture;
-  _getData() async {
-    return await getJson();
-  }
-
-  Future getJson() async {
-    await _readData2().then((data) {
-      
-        remedios = json.decode(data);
-        medHr = remedios.values.toList();
-      
-
-      delayFunc();
-      _readData().then((data) {
-        if(this.mounted){
-          setState(() {
-          if (data.isNotEmpty) {
-            proxs = json.decode(data);
-          }
-        });
-        }
-      });
-      return proxs;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    dataFuture = _getData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -524,7 +491,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ],
                             ),
-                            linha(),
+                            lista(),
                           ],
                         )),
                   ),

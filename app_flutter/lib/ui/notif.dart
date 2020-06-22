@@ -7,25 +7,23 @@ class Notif extends StatefulWidget {
 }
 
 class _NotifState extends State<Notif> {
-bool _value = false;
-bool _value2 = false;
-bool _value3 = false;
+List <bool> values = [false,false,false];
 
 void _onChanged(bool value){
   setState(() {
-    _value = value;
+    values[0] = value;
   });
 }
 
 void _onChanged2(bool value){
   setState(() {
-    _value2 = value;
+    values[1] = value;
   });
 }
 
 void _onChanged3(bool value){
   setState(() {
-    _value3 = value;
+    values[2] = value;
   });
 }
 
@@ -33,7 +31,7 @@ String text1 = "Doses Perdidas";
 String text2 = "Medicamento Acabando";
 String text3 = "Mudanças de Agenda";
 
-Widget linha(String text,void a(bool value),bool _value){
+Widget linha(String text,void switc(bool value),bool _value){
   return
   Column(children: <Widget>[
     Container(
@@ -44,7 +42,7 @@ Widget linha(String text,void a(bool value),bool _value){
         children: <Widget>[
           Text("$text", style: TextStyle(fontSize:20,color: Colors.black.withOpacity(0.8)),),
           Transform.scale(scale: 1.3,
-   child:Switch(value: _value,onChanged: (bool value){a(value);}),)
+   child:Switch(value: _value,onChanged: (bool value){switc(value);}),)
         ],),
     ),
     Divider(thickness: 1,),
@@ -65,9 +63,9 @@ Widget linha(String text,void a(bool value),bool _value){
       ),
       body:Column(children: <Widget>[ 
         SizedBox(height: 20,),    
-    linha(text1,_onChanged,_value),
-    linha(text2,_onChanged2,_value2),
-    linha(text3,_onChanged3,_value3),
+    linha(text1,_onChanged,values[0]),
+    linha(text2,_onChanged2,values[1]),
+    linha(text3,_onChanged3,values[2]),
 ],),  
     );
   }
