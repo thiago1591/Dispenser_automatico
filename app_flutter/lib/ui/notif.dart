@@ -35,7 +35,7 @@ Widget linha(String text,void switc(bool value),bool _value){
   return
   Column(children: <Widget>[
     Container(
-      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 25, 13),
+      padding: EdgeInsetsDirectional.fromSTEB(20, 30, 25, 13),
       width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,7 +65,6 @@ Widget linha(String text,void switc(bool value),bool _value){
         SizedBox(height: 20,),    
     linha(text1,_onChanged,values[0]),
     linha(text2,_onChanged2,values[1]),
-    linha(text3,_onChanged3,values[2]),
 ],),  
     );
   }

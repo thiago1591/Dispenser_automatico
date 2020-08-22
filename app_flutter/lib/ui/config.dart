@@ -230,7 +230,7 @@ class _ConfigState extends State<Config> {
                           fontSize: 18, color: Colors.black87.withOpacity(0.5)),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 14,
                     ),
                     Row(
                       children: <Widget>[
@@ -255,7 +255,7 @@ class _ConfigState extends State<Config> {
                                       builder: (context) => Main()));
                             }),
                         Padding(
-                          padding: EdgeInsets.only(left: 60),
+                          padding: EdgeInsets.only(left: 10),
                           child: FlatButton(
                               child: Center(
                                 child: Text("ADICIONAR MAIS",

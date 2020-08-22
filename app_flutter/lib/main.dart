@@ -24,9 +24,8 @@ class _MainState extends State<Main> {
     switch(currentIndex){
       case 0: return Home();
       case 1: return Meds();
-      case 2: return Status();
-      case 3: return Notif();
-      case 4: return Chat();
+      case 2: return Notif();
+      case 3: return Chat();
       break;
       default:return Home();
     }
@@ -63,12 +62,6 @@ class _MainState extends State<Main> {
     BottomNavigationBarItem(
       icon: Icon(Icons.healing),
       title: Text('Meds'),
-      
-    ),
-  
-    BottomNavigationBarItem(
-      icon: Icon(Icons.insert_invitation),
-      title: Text('Status'),
       
     ),
   
