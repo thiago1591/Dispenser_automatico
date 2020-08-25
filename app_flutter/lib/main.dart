@@ -2,7 +2,6 @@
 import 'package:dispenser/ui/home_page.dart';
 import 'package:dispenser/ui/checkFirstSeen.dart';
 import 'package:dispenser/ui/meds.dart';
-import 'package:dispenser/ui/status.dart';
 import "package:flutter/material.dart";
 import 'package:dispenser/ui/notif.dart';
 import 'package:dispenser/ui/chat.dart';
@@ -64,6 +63,8 @@ class _MainState extends State<Main> {
       title: Text('Meds'),
       
     ),
+  
+    
   
     BottomNavigationBarItem(
       icon: Icon(Icons.notifications_none),

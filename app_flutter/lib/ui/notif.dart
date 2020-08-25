@@ -29,7 +29,6 @@ void _onChanged3(bool value){
 
 String text1 = "Doses Perdidas";
 String text2 = "Medicamento Acabando";
-String text3 = "Mudanças de Agenda";
 
 Widget linha(String text,void switc(bool value),bool _value){
   return
