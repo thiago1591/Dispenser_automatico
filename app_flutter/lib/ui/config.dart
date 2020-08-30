@@ -21,7 +21,12 @@ class _ConfigState extends State<Config> {
           remedios = json.decode(data);
         });
       });
-    });
+      _readData2().then((data) {
+        setState(() {
+          horasFB = json.decode(data);
+        });
+      });
+    });  
   }
 
   List keys = [];
@@ -31,6 +36,8 @@ class _ConfigState extends State<Config> {
   final dBRef = FirebaseDatabase.instance.reference();
   Map<String, dynamic> remedios = Map();
   final textController = TextEditingController();
+  String horaFB;
+  List horasFB = [];
 
   Future<TimeOfDay> _selectTime(BuildContext context) {
     final now = DateTime.now();
@@ -40,9 +47,9 @@ class _ConfigState extends State<Config> {
   }
 
   void writeFirebase() {
-    for (int i = 0; i < remedios.length; i++) {
-      List values = remedios.values.toList();
-      dBRef.child('horarios').child('$i').set({'$i': values[i]});
+    for (int i = 0; i < horasFB.length; i++) {
+      dBRef.child('horarios').child('$i').set({'$i': horasFB[i]});
+      print(horasFB[i]);
     }
   }
 
@@ -130,8 +137,9 @@ class _ConfigState extends State<Config> {
                           onPressed: () async {
                             final selectedTime = await _selectTime(context);
                             setState(() {
-                              String a =
+                               String a =
                                   "${selectedTime.hour}:${selectedTime.minute}";
+                              horasFB.add(a);
                               DateFormat df = DateFormat('h:mm');
                               DateTime dt = df.parse(a);
                               hora = DateFormat.Hm().format(dt);
@@ -246,8 +254,8 @@ class _ConfigState extends State<Config> {
                             onPressed: () {
                               remedios[textController.text] = hora;
                               _saveData();
+                              _saveData2();
                               writeFirebase();
-
                               Navigator.pop(context);
                               Navigator.push(
                                   context,
@@ -353,6 +361,10 @@ class _ConfigState extends State<Config> {
     final directory = await getApplicationDocumentsDirectory();
     return File("${directory.path}/data2.json");
   }
+  Future<File> _getFile2() async {
+    final directory = await getApplicationDocumentsDirectory();
+    return File("${directory.path}/data3.json");
+  }
 
   Future<File> _saveData() async {
     String data = json.encode(remedios);
@@ -363,6 +375,20 @@ class _ConfigState extends State<Config> {
   Future<String> _readData() async {
     try {
       final file = await _getFile();
+      return file.readAsString();
+    } catch (e) {
+      return null;
+    }
+  }
+   Future<File> _saveData2() async {
+    String data = json.encode(horasFB);
+    final file = await _getFile2();
+    return file.writeAsString(data);
+  }
+
+  Future<String> _readData2() async {
+    try {
+      final file = await _getFile2();
       return file.readAsString();
     } catch (e) {
       return null;
